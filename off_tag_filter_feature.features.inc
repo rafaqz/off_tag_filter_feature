@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * off_tags_feature.features.inc
+ * off_tag_filter_feature.features.inc
  */
 
 /**
  * Implements hook_ctools_plugin_api().
  */
-function off_tags_feature_ctools_plugin_api($module = NULL, $api = NULL) {
+function off_tag_filter_feature_ctools_plugin_api($module = NULL, $api = NULL) {
   if ($module == "context" && $api == "context") {
     return array("version" => "3");
   }
@@ -19,14 +19,14 @@ function off_tags_feature_ctools_plugin_api($module = NULL, $api = NULL) {
 /**
  * Implements hook_views_api().
  */
-function off_tags_feature_views_api($module = NULL, $api = NULL) {
+function off_tag_filter_feature_views_api($module = NULL, $api = NULL) {
   return array("api" => "3.0");
 }
 
 /**
  * Implements hook_flag_default_flags().
  */
-function off_tags_feature_flag_default_flags() {
+function off_tag_filter_feature_flag_default_flags() {
   $flags = array();
   // Exported flag: "Tag Filter".
   $flags['tag_filter'] = array(
@@ -54,7 +54,7 @@ function off_tags_feature_flag_default_flags() {
     'show_on_form' => 0,
     'access_author' => '',
     'show_contextual_link' => 0,
-    'module' => 'off_tags_feature',
+    'module' => 'off_tag_filter_feature',
     'locked' => array(
       0 => 'name',
     ),

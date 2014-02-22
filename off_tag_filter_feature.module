@@ -1,17 +1,17 @@
 <?php
 /**
  * @file
- * Code for the OFF Tags Feature feature.
+ * Code for the OFF Tag Filter Feature feature.
  */
 
-include_once 'off_tags_feature.features.inc';
+include_once 'off_tag_filter_feature.features.inc';
 
 /**
  * Implements hook_init().
  * 
  * Set a tag context for view filtering. 
  */
-function off_tags_feature_init() { 
+function off_tag_filter_feature_init() { 
   // Set tag filter context
   $context = context_get();
   $og_context = og_context();
@@ -42,43 +42,7 @@ function off_tags_feature_init() {
     }
     if (!empty($fids)) {
       $fid_string = implode($fids, '+');
-      context_set('off_tags_feature', 'tag_filter', $fid_string);
-    }
-  }
-}
-
-/**
- * Implements hook_system_info_alter().
- */
-function off_tags_feature_system_info_alter(&$info, $file, $type) {
-  // We dynamically add field_tags to content types that implement
-  // integration. We must add a corresponding line for each field
-  // instance to off_tags_feature.info so that Features is aware of the instance
-  // and can sucessfully revert the field_instance component back to its
-  // default state.
-  if ($file->name == 'off_tags_feature') {
-    $entity_types = off_tags_feature_get_entity_types_with_tags();
-    if (!empty($entity_types)) {
-      foreach ($entity_types as $entity_type => $bundles) {
-        foreach(array_keys($bundles) as $bundle) {
-          $info['features']['field_instance'][] = "$entity_type-$bundle-field_tags";
-        }
-      }
-    }
-  }
-}
-
-/**
- * Implements hook_features_pipe_alter().
- */
-function off_tags_feature_features_pipe_alter(&$pipe, $data, $export) {
-  if (!empty($pipe['field_instance'])) {
-    foreach ($pipe['field_instance'] as $delta => $value) {
-      $args = explode('-', $value);
-      $field_name = $args[2];
-      if ($field_name == 'field_tags') {
-        unset($pipe['field_instance'][$delta]);
-      }
+      context_set('off_tag_filter_feature', 'tag_filter', $fid_string);
     }
   }
 }
@@ -86,7 +50,7 @@ function off_tags_feature_features_pipe_alter(&$pipe, $data, $export) {
 /**
  * Implements hook_views_pre_view().
  */
-function off_tags_feature_views_pre_view(&$view, &$display_id, &$args) {
+function off_tag_filter_feature_views_pre_view(&$view, &$display_id, &$args) {
   // Get all enabled integrations.
   $integrations = module_invoke_all('collabco_integration');
   foreach ($integrations as $integration) { 
@@ -125,7 +89,7 @@ function off_tags_feature_views_pre_view(&$view, &$display_id, &$args) {
       $arguments['tid']['breadcrumb_enable'] = 0;
       $arguments['tid']['breadcrumb'] = '';
       $arguments['tid']['default_argument_type'] = 'context';
-      $arguments['tid']['default_argument_options']['namespace'] = 'off_tags_feature';
+      $arguments['tid']['default_argument_options']['namespace'] = 'off_tag_filter_feature';
       $arguments['tid']['default_argument_options']['attribute'] = 'tag_filter';
       $arguments['tid']['default_argument_skip_url'] = 0;
       $arguments['tid']['summary_options']['base_path'] = '';
@@ -148,27 +112,5 @@ function off_tags_feature_views_pre_view(&$view, &$display_id, &$args) {
       $view->display_handler->override_option('arguments', $arguments);
     }
   }
-}
-
-/**
- * Returns an array of entity types that are enabled via collabco integration.
- */
-function off_tags_feature_get_entity_types_with_tags() {
-  // Find all Commons Entity integrations.
-  $integrations = module_invoke_all('collabco_integration');
-  $entities = array();
-  foreach ($integrations as $integration) { 
-    if (empty($integration['entity']['node'])) {
-      continue;
-    }
-    foreach ($integration['entity'] as $entity_type) {
-      foreach ($entity_type as $bundle => $options) {
-        if (!isset($options['exclude_tags']) || $options['exclude_tags'] == FALSE) {
-          $entities['node'][$bundle] = $options;
-        }
-      }
-    }
-  }
-  return $entities;
 }
 

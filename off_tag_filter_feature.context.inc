@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * off_tags_feature.context.inc
+ * off_tag_filter_feature.context.inc
  */
 
 /**
  * Implements hook_context_default_contexts().
  */
-function off_tags_feature_context_default_contexts() {
+function off_tag_filter_feature_context_default_contexts() {
   $export = array();
 
   $context = new stdClass();
