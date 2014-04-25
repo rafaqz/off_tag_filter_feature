@@ -59,8 +59,8 @@ function off_tag_filter_feature_views_pre_view(&$view, &$display_id, &$args) {
       $display_integration = $integration['views'][$view->name][$display_id];
 
       // Return nothing if the tag_filter option is set to disabled.
-      if (isset($display_integration['tag_filter']['disabled']) 
-        && ($display_integration['tag_filter']['disabled'] == TRUE)) {
+      if (isset($display_integration['tag_filter']['enabled']) 
+        && ($display_integration['tag_filter']['enabled'] == FALSE)) {
         return;
       }
           
