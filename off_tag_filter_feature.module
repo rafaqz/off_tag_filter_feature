@@ -35,11 +35,11 @@ function off_tag_filter_feature_init() {
       $view->set_items_per_page(0);
       $view->execute();
       $response = $view->result;
+      foreach($response as $row) {
+        $fids[$row->tid] = $row->tid;
+      }
     }
 
-    foreach($response as $row) {
-      $fids[$row->tid] = $row->tid;
-    }
     if (!empty($fids)) {
       $fid_string = implode($fids, '+');
       context_set('off_tag_filter_feature', 'tag_filter', $fid_string);
