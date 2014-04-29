@@ -87,6 +87,19 @@ function off_tag_filter_feature_views_default_views() {
   $handler->display->display_options['arguments']['gid']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['gid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['gid']['summary_options']['items_per_page'] = '25';
+  /* Contextual filter: Content: Type */
+  $handler->display->display_options['arguments']['type']['id'] = 'type';
+  $handler->display->display_options['arguments']['type']['table'] = 'node';
+  $handler->display->display_options['arguments']['type']['field'] = 'type';
+  $handler->display->display_options['arguments']['type']['relationship'] = 'reverse_field_tags_node';
+  $handler->display->display_options['arguments']['type']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['type']['default_argument_type'] = 'context';
+  $handler->display->display_options['arguments']['type']['default_argument_options']['namespace'] = 'context';
+  $handler->display->display_options['arguments']['type']['default_argument_options']['attribute'] = 'integration';
+  $handler->display->display_options['arguments']['type']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['type']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['type']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['type']['limit'] = '0';
 
   /* Display: User Block */
   $handler = $view->new_display('block', 'User Block', 'user_block');
