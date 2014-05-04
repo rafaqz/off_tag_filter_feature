@@ -19,7 +19,6 @@ function off_tag_filter_feature_init() {
     return;
   }
   if ($flag = flag_get_flag('tag_filter')) { 
-    $fid = array();
     // Use the same view that filters the tags block to filter the tags 
     // to only include those actually used in the group.
     if (!empty($og_context)) {
@@ -29,6 +28,7 @@ function off_tag_filter_feature_init() {
       $display = 'user_term_reference';
     }
 
+    $tids = array();
     if ($view = views_get_view('tag_filter')) {
       $view->set_display($display);
       // Remove any pagination.
@@ -36,13 +36,13 @@ function off_tag_filter_feature_init() {
       $view->execute();
       $response = $view->result;
       foreach($response as $row) {
-        $fids[$row->tid] = $row->tid;
+        $tids[$row->tid] = $row->tid;
       }
     }
 
-    if (!empty($fids)) {
-      $fid_string = implode($fids, '+');
-      context_set('off_tag_filter_feature', 'tag_filter', $fid_string);
+    if (!empty($tids)) {
+      $tid_string = implode($tids, '+');
+      context_set('off_tag_filter_feature', 'tag_filter', $tid_string);
     }
   }
 }
