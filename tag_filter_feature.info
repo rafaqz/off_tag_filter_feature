@@ -1,7 +1,7 @@
-name = OFF Tag Filter Feature
+name = Tag Filter Feature
 description = Provides generic tags and tag filtering.
 core = 7.x
-package = Collabco
+package = Features
 dependencies[] = context
 dependencies[] = ctools
 dependencies[] = fe_block
