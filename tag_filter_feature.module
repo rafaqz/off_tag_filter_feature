@@ -4,14 +4,14 @@
  * Code for the OFF Tag Filter Feature feature.
  */
 
-include_once 'off_tag_filter_feature.features.inc';
+include_once 'tag_filter_feature.features.inc';
 
 /**
  * Implements hook_init().
  * 
  * Set a tag context for view filtering. 
  */
-function off_tag_filter_feature_init() { 
+function tag_filter_feature_init() { 
   // Set tag filter context
   $context = context_get();
   $og_context = og_context();
@@ -42,7 +42,7 @@ function off_tag_filter_feature_init() {
 
     if (!empty($tids)) {
       $tid_string = implode($tids, '+');
-      context_set('off_tag_filter_feature', 'tag_filter', $tid_string);
+      context_set('tag_filter_feature', 'tag_filter', $tid_string);
     }
   }
 }
@@ -50,9 +50,9 @@ function off_tag_filter_feature_init() {
 /**
  * Implements hook_views_pre_view().
  */
-function off_tag_filter_feature_views_pre_view(&$view, &$display_id, &$args) {
+function tag_filter_feature_views_pre_view(&$view, &$display_id, &$args) {
   // Get all enabled integrations.
-  $integrations = module_invoke_all('collabco_integration');
+  $integrations = module_invoke_all('integration');
   foreach ($integrations as $integration) { 
     // Check for a matching view name and display id.
     if (isset($integration['views'][$view->name][$display_id])) { 
@@ -89,7 +89,7 @@ function off_tag_filter_feature_views_pre_view(&$view, &$display_id, &$args) {
       $arguments['tid']['breadcrumb_enable'] = 0;
       $arguments['tid']['breadcrumb'] = '';
       $arguments['tid']['default_argument_type'] = 'context';
-      $arguments['tid']['default_argument_options']['namespace'] = 'off_tag_filter_feature';
+      $arguments['tid']['default_argument_options']['namespace'] = 'tag_filter_feature';
       $arguments['tid']['default_argument_options']['attribute'] = 'tag_filter';
       $arguments['tid']['default_argument_skip_url'] = 0;
       $arguments['tid']['summary_options']['base_path'] = '';

@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * off_tag_filter_feature.views_default.inc
+ * tag_filter_feature.views_default.inc
  */
 
 /**
  * Implements hook_views_default_views().
  */
-function off_tag_filter_feature_views_default_views() {
+function tag_filter_feature_views_default_views() {
   $export = array();
 
   $view = new view();
