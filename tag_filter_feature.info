@@ -23,4 +23,3 @@ features[features_api][] = api:2
 features[flag][] = tag_filter
 features[views_view][] = tag_filter
 features_exclude[dependencies][groups_feature] = groups_feature
-project path = sites/all/modules/features
