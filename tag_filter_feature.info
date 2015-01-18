@@ -19,5 +19,7 @@ features[ctools][] = strongarm:strongarm:1
 features[ctools][] = views:views_default:3.0
 features[features_api][] = api:2
 features[flag][] = tag_filter
+features[user_permission][] = flag tag_filter
+features[user_permission][] = unflag tag_filter
 features[views_view][] = tag_filter
 features_exclude[dependencies][groups_feature] = groups_feature
